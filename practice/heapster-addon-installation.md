@@ -1,5 +1,15 @@
 # 安装heapster插件
 
+## 准备镜像
+
+官方镜像保存在 gcr.io 中需要翻墙才能下载，为了方便大家使用，我下载后放到了[时速云](http://www.tenxcloud.com)中，为公有镜像供大家下载。
+
+- index.tenxcloud.com/jimmy/heapster-amd64:v1.3.0-beta.1
+- index.tenxcloud.com/jimmy/heapster-influxdb-amd64:v1.1.1
+- index.tenxcloud.com/jimmy/heapster-grafana-amd64:v4.0.2
+
+## 准备YAML文件
+
 到 [heapster release 页面](https://github.com/kubernetes/heapster/releases) 下载最新版本的 heapster。
 
 ``` bash
@@ -18,7 +28,7 @@ grafana-deployment.yaml  grafana-service.yaml  heapster-deployment.yaml  heapste
 
 我们自己创建了heapster的rbac配置`heapster-rbac.yaml`。
 
-已经修改好的 yaml 文件见：[heapster](../manifests/heapster/)
+已经修改好的 yaml 文件见：[../manifests/heapster](https://github.com/rootsongjc/kubernetes-handbook/blob/master/manifests/heapster/)
 
 
 ## 配置 grafana-deployment
@@ -202,3 +212,7 @@ monitoring-influxdb    10.254.22.46    <nodes>       8086:32299/TCP,8083:30269/T
 ![修改grafana模板](../images/grafana-dashboard-setting.jpg)
 
 将 Templating 中的 namespace 的 Data source 设置为 influxdb-datasource，Refresh 设置为 on Dashboard Load 保存设置，刷新浏览器，即可看到其他 namespace 选项。
+
+## 参考
+
+[使用Heapster获取集群对象的metric数据](../practice/using-heapster-to-get-object-metrics.md)

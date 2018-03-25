@@ -4,6 +4,12 @@ Service mesh 又译作 ”服务网格“，作为服务间通信的基础设施
 
 > A service mesh is a dedicated infrastructure layer for handling service-to-service communication. It’s responsible for the reliable delivery of requests through the complex topology of services that comprise a modern, cloud native application. In practice, the service mesh is typically implemented as an array of lightweight network proxies that are deployed alongside application code, without the application needing to be aware.
 
+今年来以 [Istio](https://istio.io) 和 [Linkderd](https://linkerd.io) 为代表的 Service Mesh 蓬勃发展，大有成为下一代语言异构微服务架构的王者之范，今天又碰巧看到了 Red Hat 的 [Burr Sutter](https://twitter.com/burrsutter) 提出了**8 Steps to Becoming Awesome with Kubernetes**，整个PPT一共60多页，很有建设性，[点此](https://github.com/rootsongjc/cloud-native-slides-share/blob/master/kubernetes/8-Steps-to-Becoming-Awesome-with-Kubernetes-readhat-burrsutter.pdf)跳转到我的GitHub上下载，我将其归档到[cloud-native-slides-share](https://github.com/rootsongjc/cloud-native-slides-share)中了。
+
+![下一代异构微服务架构](../images/polyglot-microservices-serivce-mesh.png)
+
+自我6月份初接触Istio依赖就发觉service mesh很好的解决了异构语言中的很多问题，而且是kuberentes service 上层不可或缺的服务间代理。关于istio的更多内容请参考 [istio中文文档](http://istio.doczh.cn)。
+
 ## 什么是 service mesh？
 
 Service mesh 有如下几个特点：
@@ -59,6 +65,26 @@ Service mesh 并没有给我们带来新功能，它是用于解决其他工具�
 
 在 Cloud Native 架构下，容器的使用给予了异构应用程序的更多可行性，kubernetes 增强的应用的横向扩容能力，用户可以快速的编排出复杂环境、复杂依赖关系的应用程序，同时开发者又无须过分关心应用程序的监控、扩展性、服务发现和分布式追踪这些繁琐的事情而专注于程序开发，赋予开发者更多的创造性。
 
+## Istio VS Linkerd
+
+当前的Service Mesh实现主要有两大阵营，要给是Linkerd（也是最初提出该概念的），另一个是Istio，当然还有很多其他号称也是Service Mesh，比如Nginx出品的[Nginmesh](https://github.com/nginmesh/nginmesh)。
+
+| **Feature** | **Istio**     | **Linkerd**                  |
+| ----------- | ------------- | ---------------------------- |
+| 部署架构        | Envoy/Sidecar | DaemonSets                   |
+| 易用性         | 复杂            | 简单                           |
+| 支持平台        | kuberentes    | kubernetes/mesos/Istio/local |
+| 当前版本        | 0.3.0         | 1.3.3                        |
+| 是否已有生产部署    | 否             | 是                            |
+
+下图是Istio和Linkerd架构的不同，Istio是使用Sidecar模式，将Envoy植入到Pod中，而Linkerd则是在每台node上都以DaemonSet的方式运行。
+
+![Istio vs linkerd](../images/istio-vs-linkerd.jpg)
+
+关于Istio和Linkerd的详细信息请参考 [安装并试用Istio service mesh](istio-installation.md) 与 [Linkerd 使用指南](linkerd-user-guide.md)。
+
+另外出品Linkerd的公司buoyant又推出了[conduit](https://conduit.io)，这是一种更轻量级的Service Mesh。
+
 ## 参考
 
 [WHAT’S A SERVICE MESH? AND WHY DO I NEED ONE?](https://buoyant.io/2017/04/25/whats-a-service-mesh-and-why-do-i-need-one/)
@@ -73,4 +99,4 @@ Service mesh 并没有给我们带来新功能，它是用于解决其他工具�
 
 [Pattern: Service Mesh](http://philcalcado.com/2017/08/03/pattern_service_mesh.html)
 
-[Istio官方文档中文版](https://istio.doczh.cn/)
+[Istio官方文档中文版](http://istio.doczh.cn/)
